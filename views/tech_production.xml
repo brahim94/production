@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_stock_type_inherit" model="ir.ui.view">
+                <field name="name">stock.type.form.inherit</field>
+                <field name="model">stock.picking.type</field>
+                <field name="inherit_id" ref="stock.view_picking_type_form"/>
+                <field name="arch" type="xml">                
+                    <xpath expr="//field[@name='show_operations']" position="after">
+                            <field name="regularization_prd"/> 
+                             <!-- <field name="order_prod"/> -->
+                    </xpath>
+                </field>
+    </record>
+
+    <record id="view_stock_pickinginherit" model="ir.ui.view">
+                <field name="name">stock.picking.form.inherit</field>
+                <field name="model">stock.picking</field>
+                <field name="inherit_id" ref="stock.view_picking_form"/>
+                <field name="arch" type="xml">                
+                    <xpath expr="//field[@name='origin']" position="after">
+                            <field name="regularization_id" domain="[('picking_type_id', '=', picking_type_id)]" invisible="1"/>
+                            <field name="order_prod" attrs="{'invisible': [('regularization_id','!=', True)]}"/> 
+                            <!-- <field name="order_prod"/> -->
+                    </xpath>
+                </field>
+    </record>
+
+    </odoo>
