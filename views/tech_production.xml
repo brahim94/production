@@ -1,29 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-    <record id="view_stock_type_inherit" model="ir.ui.view">
-                <field name="name">stock.type.form.inherit</field>
-                <field name="model">stock.picking.type</field>
-                <field name="inherit_id" ref="stock.view_picking_type_form"/>
-                <field name="arch" type="xml">                
-                    <xpath expr="//field[@name='show_operations']" position="after">
-                            <field name="regularization_prd"/> 
-                             <!-- <field name="order_prod"/> -->
-                    </xpath>
+    <data>
+        <record id="view_picking_type_form_inherit_tech" model="ir.ui.view">
+            <field name="name">Operation Types</field>
+            <field name="model">stock.picking.type</field>
+            <field name="inherit_id" ref="stock.view_picking_type_form"/>
+            <field name="arch" type="xml">
+                <field name="show_operations" position="after">
+                    <field name="production_adjustment"/>
                 </field>
-    </record>
+            </field>
+        </record>
+        <record id="view_stock_picking_inherit_tech" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="production_adjustment" invisible="1"/>
+                    <field name="manufacturing_order" options="{'no_create': True}" attrs="{'required': [('production_adjustment', '=', True)],
+                    'invisible': [('production_adjustment', '=', False)]}"/>
 
-    <record id="view_stock_pickinginherit" model="ir.ui.view">
-                <field name="name">stock.picking.form.inherit</field>
-                <field name="model">stock.picking</field>
-                <field name="inherit_id" ref="stock.view_picking_form"/>
-                <field name="arch" type="xml">                
-                    <xpath expr="//field[@name='origin']" position="after">
-                            <field name="regularization_id" domain="[('picking_type_id', '=', picking_type_id)]" invisible="1"/>
-                            <field name="order_prod" attrs="{'invisible': [('regularization_id','!=', True)]}"/> 
-                            <!-- <field name="order_prod"/> -->
-                    </xpath>
-                </field>
-    </record>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="sales_order_id"/>
+                    <field name="Vehicle_registration"/>
+                    <field name="transport_order" />
+                    <field name="client_order"/>
 
-    </odoo>
+                </xpath>
+                <xpath expr="//button[@name='do_print_picking']" position="after">
+                    <button name="do_print_delivery" string="Bon de Livraison" class="oe_highlight" type="object"/>
+
+                </xpath>
+                
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

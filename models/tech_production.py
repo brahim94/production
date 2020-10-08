@@ -1,13 +1,25 @@
-from odoo import api, fields, models
+from odoo import models, fields, api
 
-class tech_production(models.Model):
+class StockPickingType(models.Model):
     _inherit = "stock.picking.type"
 
-    regularization_prd = fields.Boolean('Regularisation Production')
-    #order_prod = fields.Many2one('stock.picking.type', 'Order Fabrication', required=True)
+    production_adjustment = fields.Boolean('Régularisation de production')
 
-class tech_production_picking_type(models.Model):
+class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    order_prod = fields.Many2one('stock.picking', 'Order Fabrication', required=True)
-    regularization_id = fields.Boolean(related='picking_type_id.regularization_prd', string='Regularisation production')
+    manufacturing_order = fields.Many2one('mrp.production', 'Ordre de Fabrication', check_company=True, help="Ordre de Fabrication à régulariser")
+    production_adjustment = fields.Boolean(related='picking_type_id.production_adjustment', readonly=True)
+    Vehicle_registration = fields.Char('Immatriculation véhicule')
+    transport_order = fields.Char('Ordre de transport')
+    sales_order_id = fields.Many2one('sale.order', 'Réf Commande')
+    client_order = fields.Char("Réf d'ordre de client")
+
+    @api.onchange('sales_order_id')
+    def onchange_client_id(self):
+        self.client_order = self.sales_order_id.client_order_ref
+
+    def do_print_delivery(self):
+        return self.env.ref('tech_production.action_report_delivery').report_action(self)
+  
+

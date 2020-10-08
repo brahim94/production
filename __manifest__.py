@@ -20,12 +20,13 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'stock'],
+    'depends': ['base', 'stock', 'purchase'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         'views/tech_production.xml',
+        'report/delivery_slip.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
