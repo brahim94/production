@@ -12,12 +12,12 @@ class StockPicking(models.Model):
     production_adjustment = fields.Boolean(related='picking_type_id.production_adjustment', readonly=True)
     Vehicle_registration = fields.Char('Immatriculation véhicule')
     transport_order = fields.Char('Ordre de transport')
-    sales_order_id = fields.Many2one('sale.order', 'Réf Commande')
-    client_order = fields.Char("Réf d'ordre de client")
+    #sales_order_id = fields.Many2one('sale.order', 'Réf Commande')
+    client_order = fields.Char(related='sale_id.client_order_ref', store=True, string='ordre de client')
 
-    @api.onchange('sales_order_id')
-    def onchange_client_id(self):
-        self.client_order = self.sales_order_id.client_order_ref
+    # @api.onchange('sales_order_id')
+    # def onchange_client_id(self):
+    #     self.client_order = self.sales_order_id.client_order_ref
 
     def do_print_delivery(self):
         return self.env.ref('tech_production.action_report_delivery').report_action(self)

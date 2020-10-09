@@ -22,9 +22,10 @@
 
                 </xpath>
                 <xpath expr="//field[@name='user_id']" position="after">
-                    <field name="sales_order_id"/>
+                    <!-- <field name="sales_order_id" /> -->
                     <field name="Vehicle_registration"/>
                     <field name="transport_order" />
+                    <!-- <field name="client_order" domain="[('sales_order_id', '=', 'origin')]"/> -->
                     <field name="client_order"/>
 
                 </xpath>
