@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_tech_production_tech_production,tech_production.tech_production,model_tech_production_tech_production,base.group_user,1,1,1,1
+base.access_ir_sequence,access_ir_sequence,base.model_ir_sequence,sales_team.group_sale_manager,1,1,1,1
+access_pack_serial_number,access_pack_serial_number,model_pack_serial_number,base.group_user,1,1,1,1

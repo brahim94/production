@@ -21,21 +21,115 @@
                     'invisible': [('production_adjustment', '=', False)]}"/>
 
                 </xpath>
-                <xpath expr="//field[@name='user_id']" position="after">
+                <xpath expr="//group[@name='other_infos']" position="before">
                     <!-- <field name="sales_order_id" /> -->
+                     <group>
                     <field name="Vehicle_registration"/>
                     <field name="transport_order" />
-                    <!-- <field name="client_order" domain="[('sales_order_id', '=', 'origin')]"/> -->
                     <field name="client_order"/>
+                    </group>
 
                 </xpath>
                 <xpath expr="//button[@name='do_print_picking']" position="after">
                     <button name="do_print_delivery" string="Bon de Livraison" class="oe_highlight" type="object"/>
-
+                    <button name="do_affect" string="Affecter n° série" class="oe_highlight" type="object"/>
+                    <button name="do_update" string="MAJ n° série" class="oe_highlight" type="object"/>
                 </xpath>
+
                 
             </field>
         </record>
+
+        <record id="view_stock_move_line_detailed_inherit_tech" model="ir.ui.view">
+            <field name="name">stock.move.line.detailed.inherit</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree"/>
+            <field name="arch" type="xml">           
+                <xpath expr="//field[@name='lot_id']" position="after">
+                  <field name="serial_number_start"/>
+                  <field name="serial_number_end"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_sequence_form_inherit_tech" model="ir.ui.view">
+            <field name="name">Pack Sequence</field>
+            <field name="model">ir.sequence</field>
+            <field name="inherit_id" ref="base.sequence_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='implementation']" position="after">
+                    <field name="pack_sequence"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pack_sequence_view">
+            <field name="name">Pack Sequence</field>
+            <field name="res_model">ir.sequence</field>
+            <field name="domain">[("pack_sequence","=",True)]</field>
+        </record>
+
+    <menuitem id="menu_pack_sequence" name="Pack Sequence" parent="stock.menu_stock_inventory_control" action="action_pack_sequence_view" sequence="92"/>
+       
+            <record id='pack_serial_number_view_form' model='ir.ui.view'>
+                    <field name="name">pack.serial.number.form</field>
+                    <field name="model">pack.serial.number</field>
+                    <field name="arch" type="xml">
+                        <form>
+                            <sheet>
+                                <group col="2">
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="product_id"/>
+                                        <field name="stock_picking_id"/>
+                                    </group>
+                                    <group>
+                                        <field name="res_partner_id"/>
+                                        <field name="delivery_date"/>
+                                    </group>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+            </record>
+
+            <record id="pack_serial_number_view_tree" model="ir.ui.view">
+                <field name="name">pack.serial.number.tree</field>
+                <field name="model">pack.serial.number</field>
+                <field name="arch" type="xml">
+                    <tree>
+                        <field name="name"/>
+                        <field name="product_id"/>
+                        <field name="stock_picking_id"/>
+                        <field name="res_partner_id"/>
+                        <field name="delivery_date"/>
+                    </tree> 
+                </field>
+            </record>
+
+            <record model="ir.actions.act_window" id="pack_serial_number_action">
+                <field name="name">Numéros de pack/séries</field>
+                <field name="res_model">pack.serial.number</field>
+                <field name="view_mode">tree,form</field>
+                <field name="help" type="html">
+                        <p class="oe_view_nocontent_smiling_face"> Numéros de pack/séries </p>
+                </field>
+            </record>
+
+             <record id="view_product_template_pack_sequence_inherit" model="ir.ui.view">
+                <field name="name">pack_sequence.product.templatet</field>
+                <field name="model">product.template</field>
+                <field name="inherit_id" ref="product.product_template_form_view"/>
+                <field name="arch" type="xml">
+                         <xpath expr="//group[@name='group_lots_and_weight']" position="after">
+                            <group>
+                                <field name="pack_sequence_id"/>
+                            </group>
+                        </xpath>
+                </field>
+            </record>
+
+            <menuitem id="menu_pack_serial_number" name="Numéros de pack/séries" parent="stock.menu_stock_inventory_control" action="pack_serial_number_action" sequence="108"/>
 
 
     </data>
