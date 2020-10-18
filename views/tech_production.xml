@@ -27,12 +27,13 @@
                     <field name="Vehicle_registration"/>
                     <field name="transport_order" />
                     <field name="client_order"/>
+                    <field name="disable_button_id" invisible="1"/>
                     </group>
 
                 </xpath>
                 <xpath expr="//button[@name='do_print_picking']" position="after">
                     <button name="do_print_delivery" string="Bon de Livraison" class="oe_highlight" type="object"/>
-                    <button name="do_affect" string="Affecter n° série" class="oe_highlight" type="object"/>
+                    <button name="do_affect" string="Affecter n° série" class="oe_highlight" type="object"  attrs="{'invisible': [('disable_button_id','!=',False)]}"/>
                     <button name="do_update" string="MAJ n° série" class="oe_highlight" type="object"/>
                 </xpath>
 
@@ -48,6 +49,7 @@
                 <xpath expr="//field[@name='lot_id']" position="after">
                   <field name="serial_number_start"/>
                   <field name="serial_number_end"/>
+                  <field name="disable_button"/>
                 </xpath>
             </field>
         </record>

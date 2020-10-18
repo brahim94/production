@@ -16,6 +16,7 @@ class StockPicking(models.Model):
     #sales_order_id = fields.Many2one('sale.order', 'Réf Commande')
     client_order = fields.Char(related='sale_id.client_order_ref', store=True, string='ordre de client')
     brahim = fields.Char('brahim')
+    disable_button_id = fields.Boolean(related='move_line_ids_without_package.disable_button', string='Actif')
     # @api.onchange('sales_order_id')
     # def onchange_client_id(self):
     #     self.client_order = self.sales_order_id.client_order_ref
@@ -27,10 +28,11 @@ class StockPicking(models.Model):
         for rec in self:
             a = b = 0 
             for line in rec.move_line_ids_without_package:
-                if line.product_id and line.product_id.pack_sequence_id:
+                if line.product_id and line.product_id.pack_sequence_id and line.qty_done > 0:
                     a = line.product_id.pack_sequence_id.number_next_actual + line.qty_done
                     line.write({'serial_number_start': line.product_id.pack_sequence_id.number_next_actual,'serial_number_end': int(a)})
                     line.product_id.pack_sequence_id.write({'number_next_actual': a+1})
+                    line.write({'disable_button': True})
                     while b < a+1 :
                         self.env['pack.serial.number'].create({
                         'name': str(b),
@@ -40,8 +42,8 @@ class StockPicking(models.Model):
                         'delivery_date': rec.scheduled_date,
                         })
                         b = b+1
-                #else:
-                #    raise UserError("vous pouvez pas effectuer l'affecttation, merci de verfier vos lignes!")
+                else:
+                    raise UserError("Veuillez vérifier que le champs 'Quantité fait' a une valeur pour affecter un numéro de série ")
 
         return True 
 
@@ -80,5 +82,6 @@ class StockMoveLine(models.Model):
 
     serial_number_start = fields.Char(string='Début de numéro de série ')
     serial_number_end = fields.Char(string='Fin numéro de série ')
+    disable_button = fields.Boolean('Active')
 
 
