@@ -21,15 +21,12 @@
                     'invisible': [('production_adjustment', '=', False)]}"/>
 
                 </xpath>
-                <xpath expr="//group[@name='other_infos']" position="before">
+               <xpath expr="//field[@name='carrier_id']" position="after">
                     <!-- <field name="sales_order_id" /> -->
-                     <group>
                     <field name="Vehicle_registration"/>
                     <field name="transport_order" />
                     <field name="client_order"/>
-                    <field name="disable_button_id" invisible="1"/>
-                    </group>
-
+                    <field name="disable_button_id" readonly="1"/>
                 </xpath>
                 <xpath expr="//button[@name='do_print_picking']" position="after">
                     <button name="do_print_delivery" string="Bon de Livraison" class="oe_highlight" type="object"/>
@@ -49,7 +46,7 @@
                 <xpath expr="//field[@name='lot_id']" position="after">
                   <field name="serial_number_start"/>
                   <field name="serial_number_end"/>
-                  <field name="disable_button"/>
+                  <field name="disable_button" invisible="1"/>
                 </xpath>
             </field>
         </record>

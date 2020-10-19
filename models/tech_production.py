@@ -26,11 +26,13 @@ class StockPicking(models.Model):
     
     def do_affect(self):
         for rec in self:
-            a = b = 0 
+            a = b = p = 0 
             for line in rec.move_line_ids_without_package:
                 if line.product_id and line.product_id.pack_sequence_id and line.qty_done > 0:
                     a = line.product_id.pack_sequence_id.number_next_actual + line.qty_done
-                    line.write({'serial_number_start': line.product_id.pack_sequence_id.number_next_actual,'serial_number_end': int(a)})
+                    p = (line.qty_done * 100) / line.product_id.weight
+                    line.write({'serial_number_start': (str(line.product_id.pack_sequence_id.prefix)+ '/'+str(line.product_id.pack_sequence_id.suffix)+ '/' +str(line.product_id.pack_sequence_id.number_next_actual))})
+                    line.write({'serial_number_end': (str(line.serial_number_start)+str(p-1))})
                     line.product_id.pack_sequence_id.write({'number_next_actual': a+1})
                     line.write({'disable_button': True})
                     while b < a+1 :
