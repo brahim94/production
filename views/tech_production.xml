@@ -26,6 +26,8 @@
                     <field name="Vehicle_registration"/>
                     <field name="transport_order" />
                     <field name="client_order"/>
+                    <field name="qty_hundred" readonly="1"/>
+                    <field name="total_qty_done" readonly="1"/>
                     <field name="disable_button_id" readonly="1"/>
                 </xpath>
                 <xpath expr="//button[@name='do_print_picking']" position="after">
@@ -46,6 +48,8 @@
                 <xpath expr="//field[@name='lot_id']" position="after">
                   <field name="serial_number_start"/>
                   <field name="serial_number_end"/>
+                  <field name="qty_hundred_id" invisible="1"/>
+                  <field name="total_qty_done_id"  invisible="1"/>
                   <field name="disable_button" invisible="1"/>
                 </xpath>
             </field>

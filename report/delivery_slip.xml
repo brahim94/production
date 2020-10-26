@@ -28,7 +28,7 @@
             <t t-foreach="docs" t-as="o">
                 
                 
-                <!-- <style>
+                 <style>
                 table, th, td {
                 border: 1px solid black;
                 border-collapse: collapse;
@@ -41,8 +41,8 @@
                 background-color: #e8e6e6;
                 color: black;
                 }
-                </style> -->
-                <!-- <style> 
+                </style> 
+                <style> 
                 table { 
                 
                 border-radius: 13px;
@@ -50,7 +50,7 @@
                 }
 
                 }
-                </style> -->
+                </style>
 
 
                 <!-- <div style="height:80px;vertical-align:center;padding:0px; margin:0px;text-align: center" class="cls_009">
@@ -76,14 +76,14 @@
                     <h4>691.41 </h4>
                 </div> -->
 
-                <table style="position:absolute;top:64.26px;width:100%">
+                <table style="position:absolute;top:204.26px;width:100%">
                         <tr>
                             <th style="border-bottom: none;text-align:center" width="100%"><h4>691.41</h4></th>
                         </tr>
                 </table>
 
                 <!-- <table style="position:absolute;left:510px;top:250.26px;border: 1px solid black;border-radius: 13px;border-collapse: separate;width:40%;height:120px"> -->
-                        <table style="position:absolute;left:440px;top:100.26px;width:40%;height:120px">
+                        <table style="position:absolute;left:440px;top:240.26px;width:40%;height:120px">
                         <tr>
                             <th style="border-bottom: none;border-radius: 130px;text-align:center" width="100%"><h5>LES GRANDS MOULINS EL ATLAS</h5></th>
                         </tr>
@@ -93,7 +93,7 @@
                         </tr>
                 </table>
                 <!-- <table style="position:absolute;top:250.26px;border: 1px solid black;border-radius: 13px;border-collapse: separate;width:55%"> -->
-                         <table style="position:absolute;left:45px;top:100.26px;width:55%">
+                         <table style="position:absolute;left:45px;top:240.26px;width:55%">
                         <tr>
                             <th style="text-align:left;padding:0px; margin:0px" width="30%">Client</th>
                             <td style="text-align:left;padding:0px; margin:0px"><span t-field="o.partner_id"/></td>
@@ -131,10 +131,10 @@
                 </table>
 
                 <!-- <table style="position:absolute;left:510px;top:370.26px;border: 1px solid black;border-radius: 13px;border-collapse: separate;width:40%;height:100px"> -->
-                         <table style="position:absolute;left:480px;top:220.26px;width:40%">
+                         <table style="position:absolute;left:480px;top:360.26px;width:40%">
                         <tr>
                             <th style="text-align:left;padding:0px; margin:0px" width="30%">Date</th>
-                            <td style="text-align:left;padding:0px; margin:0px"><span t-field="o.scheduled_date"  t-options='{"format": "D/M/Y"}'/></td>
+                            <td style="text-align:left;padding:0px; margin:0px"><span t-field="o.scheduled_date"  t-options='{"format": "dd/M/Y"}'/></td>
                         </tr>
                         <tr>
                             <th style="text-align:left;padding:0px; margin:0px" width="30%">Heure</th>
@@ -150,15 +150,15 @@
                 </table>
 
                  <!-- <table style="position:absolute;top:420.26px;border: 1px solid black;border-radius: 13px;border-collapse: separate;width:55%"> -->
-                       <table style="position:absolute;top:270.26px;width:55%">
+                       <table style="position:absolute;left:45px;top:410.26px;width:55%">
                         <tr>
                             <th style="text-align:left;padding:0px; margin:0px" width="30%"></th>
-                            <!-- <td rowspan="2" style="border-bottom: none;text-align:left;padding:0px; margin:0px;vertical-align:top"><span t-field="o.carrier_id"/></td> -->
+                            <td style="border-bottom: none;text-align:left;padding:0px; margin:0px;vertical-align:top"><span t-field="o.transport_order"/></td>
                 
                         </tr>
                         <tr>
                             <th style="text-align:left;padding:0px; margin:0px" width="30%"></th>
-                            <td rowspan="2" style="border-bottom: none;text-align:left;padding:0px; margin:0px;vertical-align:top"><span t-field="o.Vehicle_registration"/></td>
+                            <td  style="border-bottom: none;text-align:left;padding:0px; margin:0px;vertical-align:top"><span t-field="o.Vehicle_registration"/></td>
 
                         </tr>
                        
@@ -166,7 +166,7 @@
                 </table>
 
                 <!-- <table style="position:absolute;top:500.26px;border: 1px solid black;border-radius: 13px;border-collapse: separate;width:100%"> -->
-                        <table style="position:absolute;top:340.26px;width:90%">
+                        <table style="position:absolute;top:640.26px;1px solid black;border-radius: 13px;border-collapse: separate;width:99%">
                             <thead>
                                 <tr>
                                     <th style="border-left: none;border-right: none;border-top: none;text-align:center;padding:0px; margin:0px"></th>
@@ -178,22 +178,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <t t-foreach="o.move_ids_without_package" t-as="line">
+                                <t t-foreach="o.move_line_ids_without_package" t-as="line">
                                 <tr>
                                     
-                                <td style="height:20px;border-bottom: none;border-top: none;border-right: none;border-left: none;text-align:center;padding:0px; margin:0px">17035035</td>
-                                <td style="height:30px;border-bottom: none;border-top: none;border-right: none;text-align:center;padding:0px; margin:0px"><span t-field="line.product_uom_qty"/></td>
-                                <td style="height:30px;border-bottom: none;border-top: none;border-right: none;text-align:center;padding:0px; margin:0px">50</td>
-                                <td style="height:30px;border-bottom: none;border-top: none;border-right: none;text-align:center;padding:0px; margin:0px"><span t-field="line.product_id"/></td>
-                                <td style="height:30px;border-bottom: none;border-top: none;border-right: none;text-align:center;padding:0px; margin:0px">80</td>
+                                <td style="height:20px;border-bottom: none;border-top: none;border-right: none;border-left: none;text-align:center;padding:0px; margin:0px;width:40%"><span t-field="line.serial_number_start"/> - <span t-field="line.serial_number_end"/></td>
+                                <!-- <td style="height:30px;border-bottom: none;border-top: none;border-right: none;text-align:center;padding:0px; margin:0px"><span t-field="line.qty_hundred_id"/></td> -->
+                                <td style="height:30px;border-bottom: none;border-top: none;border-right: none;text-align:center;padding:0px; margin:0px"><span t-field="line.qty_done"/></td>
+                                <td style="height:30px;border-bottom: none;border-top: none;border-right: none;text-align:center;padding:0px; margin:0px;width:30%"><span t-field="line.product_id.name"/></td>
+                                <td style="height:30px;border-bottom: none;border-top: none;border-right: none;text-align:center;padding:0px; margin:0px"><span t-field="line.qty_done"/></td>
 
                                 </tr>
                                 
                                  </t>
+                                  <!-- <t t-foreach="o.move_line_ids_without_package" t-as="line">
                                  <tr>
                                     <th colspan="4" style="height:130px;text-align: right;border-bottom: none;border-right: none;border-left: none;padding:2px; margin:2px"></th>
-                                    <td style="height:300px;border: 1px solid black;text-align: center;border-bottom: none;border-top: none;border-right: none;border-left: none;padding:0px; margin:0px">80</td>
+                                    <td style="height:300px;border: 1px solid black;text-align: center;border-bottom: none;border-top: none;border-right: none;border-left: none;padding:0px; margin:0px"><span t-field="line.total_qty_done_id"/></td>
                                 </tr>
+                                </t> -->
                             </tbody>
                         <!-- <tr>
                                     <td style="height:100px;vertical-align:bottom;border: 1px solid black;border-collapse: collapse;border-bottom: none">Total</td> 
@@ -201,11 +203,11 @@
                         
                 </table>
 
-                <!-- <div style="position:absolute;top:880px;text-align:center" class="cls_004">
-				    <span class="cls_004">توقيع المسلم<br>Signature et Cachet du Livreur</br></span>
+                <div style="position:absolute;left:700.99px;top:1050px;text-align:center" class="cls_004">
+				   <span t-field="o.total_qty_done"/>
                 </div>
 
-                <div style="position:absolute;left:680.99px;top:880px;text-align:center" class="cls_004">
+                <!--<div style="position:absolute;left:680.99px;top:880px;text-align:center" class="cls_004">
 				    <span class="cls_004">Accusé de Réception</span>
                 </div> -->
 

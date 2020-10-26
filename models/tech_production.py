@@ -15,8 +15,10 @@ class StockPicking(models.Model):
     transport_order = fields.Char('Ordre de transport')
     #sales_order_id = fields.Many2one('sale.order', 'Réf Commande')
     client_order = fields.Char(related='sale_id.client_order_ref', store=True, string='ordre de client')
-    brahim = fields.Char('brahim')
+    #brahim = fields.Char('brahim')
     disable_button_id = fields.Boolean(related='move_line_ids_without_package.disable_button', string='Actif')
+    qty_hundred = fields.Float('Quantité hundred', compute="_quantity_all")
+    total_qty_done = fields.Float('Total',compute="_total_all" )
     # @api.onchange('sales_order_id')
     # def onchange_client_id(self):
     #     self.client_order = self.sales_order_id.client_order_ref
@@ -47,7 +49,33 @@ class StockPicking(models.Model):
                 else:
                     raise UserError("Veuillez vérifier que le champs 'Quantité fait' a une valeur pour affecter un numéro de série ")
 
-        return True 
+        return True
+
+    #@api.depends('state', 'move_lines.is_quantity_done_editable', 'is_locked')
+    
+    #    if  self.state == 'assigne' and self.move_lines.is_quantity_done_editable == self.is_locked == False:
+    def _quantity_all(self):
+        for order in self:
+            qty_h = 0.0
+            for line in order.move_line_ids_without_package:
+                qty_h = (line.qty_done * 100) / line.product_id.weight
+            order.update({
+                        'qty_hundred': qty_h,
+                        })
+                    #line.qty_hundred_id = (line.qty_done * 100) / line.product_id.weight
+                # else :
+                #     qty_h = (line.qty_done * 100) / (line.product_id.weight +1)
+                     
+
+    
+    def _total_all(self):
+        for order in self:
+            total_all = 0.0
+            for line in order.move_line_ids_without_package:
+                total_all += line.qty_done
+            order.update({
+                'total_qty_done': total_all,
+                })
 
         # package_level = self.env['stock.package_level'].create({
         #             'package_id': package.id,
@@ -74,6 +102,12 @@ class PackSerialNumber(models.Model):
     res_partner_id = fields.Many2one('res.partner', string='Client')
     delivery_date = fields.Date(string='Date de livraison')
 
+    _sql_constraints = [
+        ('name_uniq',
+         'UNIQUE (name)',
+         'le champs _pack sequence name_ doit être unique.')
+    ]
+
 class ProductSequencePack(models.Model):
     _inherit = "product.template"
 
@@ -85,5 +119,9 @@ class StockMoveLine(models.Model):
     serial_number_start = fields.Char(string='Début de numéro de série ')
     serial_number_end = fields.Char(string='Fin numéro de série ')
     disable_button = fields.Boolean('Active')
+    qty_hundred_id = fields.Float(related='picking_id.qty_hundred', string='quantity hundred')
+    total_qty_done_id = fields.Float(related='picking_id.total_qty_done', string='Total')
+    
 
+    
 
